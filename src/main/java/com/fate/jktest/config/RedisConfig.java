@@ -24,7 +24,7 @@ public class RedisConfig {
      * @throws UnknownHostException
      */
     @Bean
-    public RedisTemplate<Object, ? extends BaseEntity> redisEntityTemplate(
+    public RedisTemplate<Object, ? extends BaseEntity> redisTemplate(
             RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
         RedisTemplate<Object, ? extends BaseEntity> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
