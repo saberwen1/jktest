@@ -1,30 +1,39 @@
-package com.fate.jktest;
+package com.fate.jktest.es;
 
 import com.fate.jktest.Service.FinanceService;
 import com.fate.jktest.bean.Fund;
+import io.searchbox.client.JestClient;
+import io.searchbox.core.Index;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.IOException;
 
 /**
  * @Author: fate
- * @Date: 2019/3/5 23:17
+ * @Date: 2019/3/6 15:59
  * @Version 1.0
  */
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringbootTest {
-    @Autowired
-    RedisTemplate redisTemplate;
+public class ESTest {
+
     @Autowired
     FinanceService financeService;
+    @Autowired
+    JestClient jestClient;
+
     @Test
     public void test() {
         Fund fund = financeService.queryByPId(1);
-        redisTemplate.opsForValue().set("hello",fund);
+        Index build = new Index.Builder(fund).index("fund").type("wine").build();
+        try {
+            jestClient.execute(build);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

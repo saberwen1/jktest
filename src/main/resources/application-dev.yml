@@ -1,6 +1,10 @@
 server:
-  port: 80
-debug: false
+  port: 443
+  ssl:
+    key-store: classpath:keystore.p12
+    key-alias: tomcat
+    key-store-type: PKCS12
+    key-store-password: 123456
 
   #db
 spring:
@@ -21,9 +25,20 @@ spring:
     addresses: 154.8.226.180
     password: guest
     username: guest
+  elasticsearch:
+    jest:
+      uris: http://192.168.1.15:9200
+  security:
+    user:
+      name: fate
+      password: 123456
+
 
 #开启驼峰
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-
+management:
+  endpoint:
+    shutdown:
+      enabled: true
